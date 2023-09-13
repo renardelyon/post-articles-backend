@@ -1,24 +1,30 @@
 package postarticle
 
 import (
+	postarticle_repo "article/repositories/post_articles"
 	"context"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 type handler struct {
-	ctx context.Context
-	log *logrus.Logger
+	ctx     context.Context
+	log     *logrus.Logger
+	dbWrite *gorm.DB
+	repo    postarticle_repo.Repo
 }
 
 type Handler interface {
 	InsertArticle(c *gin.Context)
 }
 
-func NewHandler(ctx context.Context, log *logrus.Logger) Handler {
+func NewHandler(ctx context.Context, log *logrus.Logger, dbWrite *gorm.DB, repo postarticle_repo.Repo) Handler {
 	return &handler{
-		ctx: ctx,
-		log: log,
+		ctx:     ctx,
+		log:     log,
+		dbWrite: dbWrite,
+		repo:    repo,
 	}
 }
