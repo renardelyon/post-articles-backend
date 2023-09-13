@@ -10,7 +10,7 @@ import (
 
 func NewMysqlDB(cfg *config.Config) (*sql.DB, error) {
 	dsn := fmt.Sprintf(
-		"%s:%s@%s(%s:%s)/%s",
+		"%s:%s@%s(%s:%s)/%s?parseTime=true",
 		cfg.ArticleDatabase.User,
 		cfg.ArticleDatabase.Password,
 		cfg.ArticleDatabase.Protocol,

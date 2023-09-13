@@ -1,4 +1,4 @@
-package postarticle
+package postarticle_handler
 
 import (
 	postarticle_repo "article/repositories/post_articles"
@@ -18,6 +18,7 @@ type handler struct {
 
 type Handler interface {
 	InsertArticle(c *gin.Context)
+	GetArticles(c *gin.Context)
 }
 
 func NewHandler(ctx context.Context, log *logrus.Logger, dbWrite *gorm.DB, repo postarticle_repo.Repo) Handler {

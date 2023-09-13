@@ -23,4 +23,6 @@ func SetupRouterPostArticle(
 	handler := postarticle.NewHandler(ctx, log, dbWrite, repo)
 
 	r.POST("/article", handler.InsertArticle)
+	r.GET("/article", handler.GetArticles)
+
 }

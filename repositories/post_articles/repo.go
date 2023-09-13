@@ -17,6 +17,7 @@ type repo struct {
 
 type Repo interface {
 	InsertArticle(ctx context.Context, tx *gorm.DB, post *postarticle_model.Post) (err error)
+	GetArticles(ctx context.Context, limit, offset int) (res []postarticle_model.Post, err error)
 }
 
 func NewRepo(logger *logrus.Logger, dbRead *sql.DB, dbWrite *gorm.DB) Repo {

@@ -1,4 +1,4 @@
-package postarticle
+package postarticle_handler
 
 import (
 	postarticle_model "article/model/post_article"
