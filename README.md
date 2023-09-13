@@ -33,7 +33,7 @@ make tidy
 make migration-up
 ```
 ### Running the service
-- If there are no `go.mode` run this command
+- If there are no `go.mod` run this command
 ```
 make init && make tidy
 ```
