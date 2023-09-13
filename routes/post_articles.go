@@ -25,4 +25,5 @@ func SetupRouterPostArticle(
 	r.POST("/article", handler.InsertArticle)
 	r.GET("/article", handler.GetArticles)
 	r.GET("/article/:id", handler.GetArticleById)
+	r.PUT("/article/:id", handler.UpdateArticleById)
 }

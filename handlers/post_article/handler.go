@@ -20,6 +20,7 @@ type Handler interface {
 	InsertArticle(c *gin.Context)
 	GetArticles(c *gin.Context)
 	GetArticleById(c *gin.Context)
+	UpdateArticleById(c *gin.Context)
 }
 
 func NewHandler(ctx context.Context, log *logrus.Logger, dbWrite *gorm.DB, repo postarticle_repo.Repo) Handler {
