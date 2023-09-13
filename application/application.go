@@ -6,12 +6,13 @@ import (
 	"database/sql"
 
 	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 type DbConnectionType uint32
 type DbClient struct {
-	Type       DbConnectionType
 	SqlAdapter *sql.DB
+	OrmAdapter *gorm.DB
 }
 
 type Application struct {

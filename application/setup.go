@@ -3,6 +3,7 @@ package application
 import (
 	"article/config"
 	"article/pkg/database/db"
+	gorm_lib "article/pkg/database/gorm"
 	"article/pkg/database/migration"
 	"context"
 	"errors"
@@ -28,6 +29,12 @@ func Setup(cfg *config.Config, c *cli.Context) (*Application, error) {
 			app.MigrationFlag = "up"
 		}
 		return app, nil
+	}
+	if err := runInit(
+		initLogger(),
+		initDatabase(cfg),
+	)(app); err != nil {
+		return app, err
 	}
 	return app, nil
 }
@@ -71,6 +78,26 @@ func initLogger() func(*Application) error {
 			TimestampFormat: "2006-01-02 15:04:05",
 		})
 		app.Logger = log
+		return nil
+	}
+}
+
+func initDatabase(cfg *config.Config) func(*Application) error {
+	return func(app *Application) error {
+		readDB, err := db.NewMysqlDB(cfg)
+		if err != nil {
+			return err
+		}
+		writeDB, err := gorm_lib.NewMysqlORM(cfg)
+		if err != nil {
+			return err
+		}
+		app.DbClients = map[string]*DbClient{
+			"article": {
+				SqlAdapter: readDB,
+				OrmAdapter: writeDB,
+			},
+		}
 		return nil
 	}
 }

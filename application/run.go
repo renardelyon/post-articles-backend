@@ -2,7 +2,10 @@ package application
 
 import (
 	"article/config"
-	"errors"
+	route "article/routes"
+	"fmt"
+
+	"github.com/gin-gonic/gin"
 )
 
 func (app *Application) Run(cfg *config.Config) error {
@@ -23,5 +26,17 @@ func runMigration(app *Application) error {
 }
 
 func runApp(cfg *config.Config, app *Application) error {
-	return errors.New("unrecognized mode")
+	gin.SetMode(gin.ReleaseMode)
+
+	r := gin.New()
+	r.Use(gin.Recovery())
+	r.Use(gin.ErrorLogger())
+
+	route.SetupRouterPostArticle(app.Context, app.Logger, r)
+
+	app.Logger.Info("Starting server " + cfg.Application.ServerPort)
+	if err := r.Run(fmt.Sprintf(":%s", cfg.Application.ServerPort)); err != nil {
+		return err
+	}
+	return nil
 }
