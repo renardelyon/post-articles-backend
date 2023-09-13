@@ -20,6 +20,7 @@ type Repo interface {
 	GetArticles(ctx context.Context, limit, offset int) (res []postarticle_model.Post, err error)
 	GetArticleById(ctx context.Context, id int) (res postarticle_model.Post, err error)
 	UpdateArticleById(ctx context.Context, tx *gorm.DB, post *postarticle_model.Post, id int) (err error)
+	DeleteArticleById(ctx context.Context, tx *gorm.DB, post *postarticle_model.Post, id int) (err error)
 }
 
 func NewRepo(logger *logrus.Logger, dbRead *sql.DB, dbWrite *gorm.DB) Repo {

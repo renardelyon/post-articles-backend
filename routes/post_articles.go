@@ -26,4 +26,5 @@ func SetupRouterPostArticle(
 	r.GET("/article", handler.GetArticles)
 	r.GET("/article/:id", handler.GetArticleById)
 	r.PUT("/article/:id", handler.UpdateArticleById)
+	r.DELETE("/article/:id", handler.DeleteArticleById)
 }
