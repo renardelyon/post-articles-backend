@@ -36,6 +36,7 @@ func runApp(cfg *config.Config, app *Application) error {
 	}
 
 	r := gin.New()
+	r.Use(CORSMiddleware())
 	r.Use(gin.Recovery())
 	r.Use(gin.ErrorLogger())
 
@@ -48,4 +49,20 @@ func runApp(cfg *config.Config, app *Application) error {
 		return err
 	}
 	return nil
+}
+
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, X-Authorization, X-SKIP-AUTH, X-App-Name")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "DELETE, POST, HEAD, PATCH, OPTIONS, GET, PUT")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
+	}
 }
