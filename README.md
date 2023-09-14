@@ -32,3 +32,15 @@ make tidy
 ```Makefile
 make migration-up
 ```
+### Running the service
+- If there are no `go.mod` run this command
+```
+make init && make tidy
+```
+- to run the service, run this command
+```
+make run
+```
+
+## API Documentation
+API documentation can be seen in this postman [link](https://www.postman.com/descent-module-technologist-74020729/workspace/post-articles-backend/request/19990992-a31920c2-6d8d-470a-af3f-20ffa14e16f0)
